@@ -32,7 +32,6 @@ in {
   options.rum.programs.itgmania = {
     enable = mkEnableOption "itgmania";
     package = mkPackageOption pkgs "itgmania" {nullable = true;};
-    dataDir = ".itgmania";
 
     profiles = mkOption {
       type = attrsOf profile;
@@ -44,7 +43,7 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     files =
       mapAttrs (id: profile: {
-        "${cfg.dataDir}/Save/LocalProfiles/${id}/Simply Love UserPrefs.ini" = {
+        ".itgmania/Save/LocalProfiles/${id}/Simply Love UserPrefs.ini" = {
           source = ini.generate "Simply Love UserPrefs.ini" {
             "Simply Love" = profile.modifiers;
           };
