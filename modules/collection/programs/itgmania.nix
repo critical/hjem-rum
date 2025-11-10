@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib.attrsets) mapAttrs mapAttrs' nameValuePair;
+  inherit (lib.attrsets) mapAttrs' nameValuePair;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.types) attrsOf nullOr oneOf bool float int str submodule;
