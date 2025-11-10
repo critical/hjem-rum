@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib.attrsets) mapAttrs;
+  inherit (lib.attrsets) mapAttrs mapAttrs' nameValuePair;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.types) attrsOf nullOr oneOf bool float int str submodule;
@@ -41,14 +41,12 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files =
-      mapAttrs (id: profile: {
-        ".itgmania/Save/LocalProfiles/${id}/Simply Love UserPrefs.ini" = {
-          source = ini.generate "Simply Love UserPrefs.ini" {
-            "Simply Love" = profile.modifiers;
-          };
+    files = mapAttrs' (id: profile:
+      nameValuePair ".itgmania/Save/LocalProfiles/${id}/Simply Love UserPrefs.ini" {
+        source = ini.generate "Simply Love UserPrefs.ini" {
+          "Simply Love" = profile.modifiers;
         };
       })
-      cfg.profiles;
+    cfg.profiles;
   };
 }
